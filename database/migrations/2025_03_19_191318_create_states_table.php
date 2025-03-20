@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models:Country::class)
+            $table->string('name');
+            $table->foreignIdFor(\App\Models\Country::class)
                   ->constrained()
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
-            $table->string('name');
             $table->char('country_code', 2);
             $table->string('fips_code')->nullable();
             $table->string('iso2')->nullable();
@@ -26,11 +26,11 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->boolean('flag')->default(true);
+            $table->timestamps();
+            $table->tinyInteger('flag')->default(1);
             $table->string('wikiDataId')
                   ->nullable()
                   ->comment('Rapid API GeoDB Cities');
-            $table->timestamps();
         });
     }
 

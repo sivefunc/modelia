@@ -13,16 +13,6 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Region::class)
-                  ->nullable()
-                  ->constrained()
-                  ->cascadeOnDelete()
-                  ->cascadeOnUpdate();
-            $table->foreignIdFor(\App\Models\SubRegion::class)
-                  ->nullable()
-                  ->constrained()
-                  ->cascadeOnDelete()
-                  ->cascadeOnUpdate();
             $table->string('name', 100);
             $table->char('iso3', 3)->nullable();
             $table->char('numeric_code', 3)->nullable();
@@ -35,7 +25,17 @@ return new class extends Migration
             $table->string('tld')->nullable();
             $table->string('native')->nullable();
             $table->string('region')->nullable();
+            $table->foreignIdFor(\App\Models\Region::class)
+                  ->nullable()
+                  ->constrained()
+                  ->cascadeOnDelete()
+                  ->cascadeOnUpdate();
             $table->string('subregion')->nullable();
+            $table->foreignIdFor(\App\Models\Subregion::class)
+                  ->nullable()
+                  ->constrained()
+                  ->cascadeOnDelete()
+                  ->cascadeOnUpdate();
             $table->string('nationality')->nullable();
             $table->text('timezones')->nullable();
             $table->text('translations')->nullable();
@@ -43,11 +43,11 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('emoji', 191)->nullable();
             $table->string('emojiU', 191)->nullable();
-            $table->boolean('flag')->default(1);
+            $table->timestamps();
+            $table->tinyInteger('flag')->default(1);
             $table->string('wikiDataId')
                   ->nullable()
                   ->comment('Rapid API GeoDB Cities');
-            $table->timestamps();
         });
     }
 
