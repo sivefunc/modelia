@@ -12,7 +12,17 @@ class State extends Model
     use HasFactory;
     protected $fillable = [
         'country_id',
-        'name'
+        'name',
+        'country_code',
+        'fips_code',
+        'iso2',
+        'type',
+        'level',
+        'parent_id',
+        'latitude',
+        'longitude',
+        'flag',
+        'wikiDataId'
     ];
 
     public function country(): BelongsTo

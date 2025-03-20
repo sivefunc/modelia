@@ -11,25 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('subregions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models:Country::class)
+            $table->string('name', 100);
+            $table->text('translations')->nullable();
+            $table->foreignIdFor(\App\Models\Region::class)
                   ->constrained()
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
-            $table->string('name');
-            $table->char('country_code', 2);
-            $table->string('fips_code')->nullable();
-            $table->string('iso2')->nullable();
-            $table->string('type', 191)->nullable();
-            $table->integer('level')->nullable();
-            $table->integer('parent_id')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('flag')->default(true);
             $table->string('wikiDataId')
                   ->nullable()
                   ->comment('Rapid API GeoDB Cities');
+
             $table->timestamps();
         });
     }
@@ -39,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('states');
+        Schema::dropIfExists('subregions');
     }
 };

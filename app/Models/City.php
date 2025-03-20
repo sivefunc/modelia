@@ -10,8 +10,15 @@ class City extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'country_id',
         'state_id',
-        'name'
+        'name',
+        'state_code',
+        'country_code',
+        'latitude',
+        'longitude',
+        'flag',
+        'wikiDataId'
     ];
 
     public function state(): BelongsTo

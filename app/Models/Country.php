@@ -12,9 +12,30 @@ class Country extends Model
     use HasFactory;
 
     protected $fillable = [
+        'region_id',
+        'subregion_id',
         'name',
-        'code',
-        'phonecode'
+        'iso3',
+        'numeric_code',
+        'iso2',
+        'phonecode',
+        'capital',
+        'currency',
+        'currency_name',
+        'currency_symbol',
+        'tld',
+        'native',
+        'region',
+        'subregion',
+        'nationality',
+        'timezones',
+        'translations',
+        'latitude',
+        'longitude',
+        'emoji',
+        'emojiU',
+        'flag',
+        'wikiDataId'
     ];
 
     public function states(): HasMany
