@@ -24,13 +24,13 @@ return new class extends Migration
             $table->string('currency_symbol')->nullable();
             $table->string('tld')->nullable();
             $table->string('native')->nullable();
-            $table->string('region')->nullable();
+            $table->string('region_name')->nullable();
             $table->foreignIdFor(\App\Models\Region::class)
                   ->nullable()
                   ->constrained()
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
-            $table->string('subregion')->nullable();
+            $table->string('subregion_name')->nullable();
             $table->foreignIdFor(\App\Models\Subregion::class)
                   ->nullable()
                   ->constrained()
