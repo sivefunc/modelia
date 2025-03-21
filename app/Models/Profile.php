@@ -55,5 +55,10 @@ class Profile extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
 }
 

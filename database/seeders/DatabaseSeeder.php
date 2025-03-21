@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             CitySeeder::class,
             ProfileSeeder::class,
+            GenerativeModelSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }
