@@ -29,29 +29,32 @@ class ListImages extends ListRecords
                 ->modifyQueryUsing(
                     fn (Builder $query) => $query->where(
                         'created_at', '>=', now()->subWeek()
-                    )
+                    )->where('created_at', '<=', now())
                 )
                 ->badge(Image::query()->where(
-                    'created_at', '>=', now()->subWeek())->count()
-                ),
+                    'created_at', '>=', now()->subWeek()
+                )->where('created_at', '<=', now())->count()
+            ),
             'This Month' => Tab::make()
                 ->modifyQueryUsing(
                     fn (Builder $query) => $query->where(
                         'created_at', '>=', now()->subMonth()
-                    )
+                    )->where('created_at', '<=', now())
                 )
                 ->badge(Image::query()->where(
-                    'created_at', '>=', now()->subMonth())->count()
-                ),
+                    'created_at', '>=', now()->subMonth()
+                )->where('created_at', '<=', now())->count()
+            ),
             'This Year' => Tab::make()
                 ->modifyQueryUsing(
                     fn (Builder $query) => $query->where(
                         'created_at', '>=', now()->subYear()
-                    )
+                    )->where('created_at', '<=', now())
                 )
                 ->badge(Image::query()->where(
-                    'created_at', '>=', now()->subYear())->count()
-                ),
+                    'created_at', '>=', now()->subYear()
+                )->where('created_at', '<=', now())->count()
+            ),
         ];
     }
 }

@@ -21,7 +21,7 @@ class ProfileFactory extends Factory
         $region = $subregion->region;
 
         $timestamp = rand(
-            now()->startOfYear()->timestamp, now()->endOfYear()->timestamp
+            now()->subYear()->timestamp, now()->timestamp
         );
 
         return [

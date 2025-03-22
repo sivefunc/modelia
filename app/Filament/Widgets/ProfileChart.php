@@ -19,7 +19,7 @@ class ProfileChart extends ChartWidget
     {
         //
         $data = Trend::model(Profile::class)->between(
-            start: now()->startOfYear(), end: now()->endOfYear(),
+            start: now()->subYear(), end: now(),
             )
             ->perMonth()
             ->count();

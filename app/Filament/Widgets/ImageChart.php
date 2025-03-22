@@ -19,7 +19,7 @@ class ImageChart extends ChartWidget
     {
         //
         $data = Trend::model(Image::class)->between(
-            start: now()->startOfYear(), end: now()->endOfYear(),
+            start: now()->subYear(), end: now(),
             )
             ->perMonth()
             ->count();

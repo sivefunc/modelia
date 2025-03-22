@@ -26,7 +26,7 @@ class ImageFactory extends Factory
         $height = rand(320, 640);
         $size = $width * $height;
         $timestamp = rand(
-            now()->startOfYear()->timestamp, now()->endOfYear()->timestamp
+            now()->subYear()->timestamp, now()->timestamp
         );
         return [
             'generative_model_id' => $model->id,
