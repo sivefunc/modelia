@@ -113,9 +113,7 @@ class ImageResource extends Resource
                 Tables\Columns\ImageColumn::make('attachment')
                     ->sortable()
                     ->defaultImageUrl(
-                        url(
-                            Storage::url('images/placeholder.png')
-                        )
+                        url('images/placeholder.png')
                     ),
                 Tables\Columns\TextColumn::make('link')
                     ->searchable()
@@ -201,8 +199,7 @@ class ImageResource extends Resource
                         ImageEntry::make('attachment')
                             ->square()
                             ->defaultImageUrl(
-                                url(Storage::url('images/placeholder.png')
-                                )
+                                url('images/placeholder.png')
                             ),
                     ])->columns(5),
             ]);
