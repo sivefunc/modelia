@@ -19,6 +19,11 @@ class ProfileFactory extends Factory
         $country = $state->country;
         $subregion = $country->subregion;
         $region = $subregion->region;
+
+        $timestamp = rand(
+            now()->startOfYear()->timestamp, now()->endOfYear()->timestamp
+        );
+
         return [
             'user_id' => \App\Models\User::factory(),
             'city_id' => $city->id,
@@ -29,7 +34,9 @@ class ProfileFactory extends Factory
             'balance' => rand(100, 1000),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
-            'date_of_birth' => fake()->date()
+            'date_of_birth' => fake()->date(),
+            'created_at' => date("Y-m-d H:i:s", $timestamp),
+            'updated_at' => date("Y-m-d H:i:s", $timestamp),
         ];
     }
 }

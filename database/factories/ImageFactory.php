@@ -25,6 +25,9 @@ class ImageFactory extends Factory
         $width = rand(320, 640);
         $height = rand(320, 640);
         $size = $width * $height;
+        $timestamp = rand(
+            now()->startOfYear()->timestamp, now()->endOfYear()->timestamp
+        );
         return [
             'generative_model_id' => $model->id,
             'profile_id' => $profile->id,
@@ -34,6 +37,8 @@ class ImageFactory extends Factory
             'type' => Str::random(10),
             'photo_size' => $size,
             'resolution' => "{$width}{$height}",
+            'created_at' => date("Y-m-d H:i:s", $timestamp),
+            'updated_at' => date("Y-m-d H:i:s", $timestamp),
         ];
     }
 }
