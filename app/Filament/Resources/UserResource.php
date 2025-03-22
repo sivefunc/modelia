@@ -50,7 +50,12 @@ class UserResource extends Resource
                             ->password()
                             ->required()
                             ->maxLength(255),
-                    ])->columns(4),
+                        Forms\Components\Select::make('roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                    ])->columns(5),
             ]);
     }
 

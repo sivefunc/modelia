@@ -41,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
                 'Address Management',
                 'User Management',
             ])
+           
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -62,6 +63,10 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+            ])
+
             ->authMiddleware([
                 Authenticate::class,
             ]);
