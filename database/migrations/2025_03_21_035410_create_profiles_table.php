@@ -42,6 +42,7 @@ return new class extends Migration
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate()
                   ->nullable();
+            $table->double('balance')->default('0.0');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->date('date_of_birth')->nullable();

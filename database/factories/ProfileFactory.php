@@ -26,6 +26,7 @@ class ProfileFactory extends Factory
             'country_id' => $country->id,
             'subregion_id' => $subregion->id,
             'region_id' => $region->id,
+            'balance' => rand(100, 1000),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'date_of_birth' => fake()->date()

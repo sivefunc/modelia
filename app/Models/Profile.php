@@ -19,6 +19,7 @@ class Profile extends Model
         'city_id',
         'region_id',
         'subregion_id',
+        'balance',
         'first_name',
         'last_name',
         'date_of_birth',

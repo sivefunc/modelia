@@ -40,7 +40,7 @@ class ProfileResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('User')
+                Forms\Components\Section::make('User name and Balance')
                     ->description('You must not leave fields in blank')
                     ->schema([
                         Forms\Components\Select::make('user_id')
@@ -48,7 +48,11 @@ class ProfileResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required(),
-                    ])->columns(1),
+                        Forms\Components\TextInput::make('balance')
+                            ->required()
+                            ->numeric()
+                            ->prefix('$'),
+                    ])->columns(2),
                 Forms\Components\Section::make('Location')
                     ->description('You must not leave fields in blank')
                     ->schema([
@@ -142,6 +146,9 @@ class ProfileResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('balance')
+                    ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('region.name')
                     ->numeric()
