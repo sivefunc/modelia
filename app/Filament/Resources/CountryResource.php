@@ -24,7 +24,20 @@ class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $navigationLabel = 'Country';
+    protected static ?string $modelLabel = 'Countries';
+    protected static ?string $navigationGroup = 'Address Management';
+    protected static ?int $navigationSort = 3;
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'success';
+    }
 
     public static function form(Form $form): Form
     {

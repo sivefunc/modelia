@@ -17,23 +17,35 @@ class RegionResource extends Resource
 {
     protected static ?string $model = Region::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
+    protected static ?string $navigationLabel = 'Region';
+    protected static ?string $modelLabel = 'Regions';
+    protected static ?string $navigationGroup = 'Address Management';
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\Textarea::make('translations')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('flag')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\TextInput::make('wikiDataId')
-                    ->maxLength(255),
+                Forms\Components\Section::make('Region info')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(100),
+                        Forms\Components\Textarea::make('translations')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('flag')
+                            ->required()
+                            ->numeric()
+                            ->default(1),
+                        Forms\Components\TextInput::make('wikiDataId')
+                            ->maxLength(255),
+                    ])->columns(4),
             ]);
     }
 

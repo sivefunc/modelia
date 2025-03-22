@@ -13,23 +13,42 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
+
+use Illuminate\Database\Eloquent\Model;
+
 class GenerativeModelResource extends Resource
 {
     protected static ?string $model = GenerativeModel::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-paint-brush';
+    protected static ?string $navigationLabel = 'Generative Model';
+    protected static ?string $modelLabel = 'Generative Models';
+    protected static ?string $navigationGroup = 'Image Management';
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cost')
-                    ->required()
-                    ->numeric()
-                    ->prefix('$'),
+                Forms\Components\Section::make('Model Name and Cost')
+                    ->description('You should not leave fields blank')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('cost')
+                            ->required()
+                            ->numeric()
+                            ->prefix('$'),
+                    ])->columns(2)
             ]);
     }
 
@@ -62,6 +81,18 @@ class GenerativeModelResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Generative Model Info')
+                    ->schema([
+                        TextEntry::make('name')->label('Model Name'),
+                        TextEntry::make('cost')->label('Model Cost'),
+                    ])->columns(2),
             ]);
     }
 

@@ -17,26 +17,37 @@ class SubregionResource extends Resource
 {
     protected static ?string $model = Subregion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-americas';
+    protected static ?string $navigationLabel = 'Subregion';
+    protected static ?string $modelLabel = 'Subregions';
+    protected static ?string $navigationGroup = 'Address Management';
+    protected static ?int $navigationSort = 2;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\Textarea::make('translations')
-                    ->columnSpanFull(),
-                Forms\Components\Select::make('region_id')
-                    ->relationship('region', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('flag')
-                    ->required()
-                    ->numeric()
-                    ->default(1),
-                Forms\Components\TextInput::make('wikiDataId')
-                    ->maxLength(255),
+                Forms\Components\Section::make('Subregion Info')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(100),
+                        Forms\Components\Textarea::make('translations')
+                            ->columnSpanFull(),
+                        Forms\Components\Select::make('region_id')
+                            ->relationship('region', 'name')
+                            ->required(),
+                        Forms\Components\TextInput::make('flag')
+                            ->required()
+                            ->numeric()
+                            ->default(1),
+                        Forms\Components\TextInput::make('wikiDataId')
+                            ->maxLength(255),
+                    ])->columns(5),
             ]);
     }
 
