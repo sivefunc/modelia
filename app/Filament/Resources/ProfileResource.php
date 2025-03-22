@@ -13,15 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-use Illuminate\Support\Collection;
 use Filament\Forms\Set;
 use Filament\Forms\Get;
 use App\Models\City;
 use App\Models\State;
 use App\Models\Country;
 use App\Models\Subregion;
-
-use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Support\Collection;
 
 class ProfileResource extends Resource
 {
@@ -80,7 +78,7 @@ class ProfileResource extends Resource
                                 $set('country_id', null);
                             })
                             ->required(),
- 
+
                         Forms\Components\Select::make('country_id')
                             ->options(
                                 fn(Get $get): Collection => Country::query()
@@ -135,7 +133,7 @@ class ProfileResource extends Resource
                             ->displayFormat('d/m/Y')
                             ->required(),
                     ])->columns(1),
-            ]);
+             ]);
     }
 
     public static function table(Table $table): Table
@@ -162,8 +160,7 @@ class ProfileResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('city.name')
                     ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('first_name')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -172,7 +169,8 @@ class ProfileResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('total_uploads')
                     ->numeric()
                     ->sortable(),
@@ -190,37 +188,30 @@ class ProfileResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('Country')
-                    ->relationship('country', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->label('Filter by Country')
-                    ->indicator('Country'),
-                SelectFilter::make('Region')
+                \Filament\Tables\Filters\SelectFilter::make('Region')
                     ->relationship('region', 'name')
                     ->searchable()
                     ->preload()
                     ->label('Filter by Region')
                     ->indicator('Region'),
-                SelectFilter::make('Subregion')
+                \Filament\Tables\Filters\SelectFilter::make('Subregion')
                     ->relationship('subregion', 'name')
                     ->searchable()
                     ->preload()
                     ->label('Filter by Subregion')
-                    ->indicator('Subregion'),
-
-                SelectFilter::make('State')
+                    ->indicator('Region'),
+                \Filament\Tables\Filters\SelectFilter::make('Country')
+                    ->relationship('country', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->label('Filter by Country')
+                    ->indicator('Country'),
+                \Filament\Tables\Filters\SelectFilter::make('State')
                     ->relationship('state', 'name')
                     ->searchable()
                     ->preload()
                     ->label('Filter by State')
                     ->indicator('State'),
-                SelectFilter::make('City')
-                    ->relationship('city', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->label('Filter by City')
-                    ->indicator('City'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -250,4 +241,3 @@ class ProfileResource extends Resource
         ];
     }
 }
-
