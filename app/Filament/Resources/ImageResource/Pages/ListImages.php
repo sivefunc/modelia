@@ -6,6 +6,10 @@ use App\Filament\Resources\ImageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
+use App\Models\Image;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\ListRecords\Tab;
+
 class ListImages extends ListRecords
 {
     protected static string $resource = ImageResource::class;
@@ -14,6 +18,40 @@ class ListImages extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'All' => Tab::make(),
+            'This Week' => Tab::make()
+                ->modifyQueryUsing(
+                    fn (Builder $query) => $query->where(
+                        'created_at', '>=', now()->subWeek()
+                    )
+                )
+                ->badge(Image::query()->where(
+                    'created_at', '>=', now()->subWeek())->count()
+                ),
+            'This Month' => Tab::make()
+                ->modifyQueryUsing(
+                    fn (Builder $query) => $query->where(
+                        'created_at', '>=', now()->subMonth()
+                    )
+                )
+                ->badge(Image::query()->where(
+                    'created_at', '>=', now()->subMonth())->count()
+                ),
+            'This Year' => Tab::make()
+                ->modifyQueryUsing(
+                    fn (Builder $query) => $query->where(
+                        'created_at', '>=', now()->subYear()
+                    )
+                )
+                ->badge(Image::query()->where(
+                    'created_at', '>=', now()->subYear())->count()
+                ),
         ];
     }
 }
