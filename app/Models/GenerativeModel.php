@@ -12,6 +12,7 @@ class GenerativeModel extends Model
     protected $fillable = [
         'name',
         'cost',
+        'endpoint',
     ];
 
     public function images(): HasMany

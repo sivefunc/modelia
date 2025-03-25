@@ -38,7 +38,7 @@ class GenerativeModelResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Model Name and Cost')
+                Forms\Components\Section::make('Model info')
                     ->description('You should not leave fields blank')
                     ->schema([
                         Forms\Components\TextInput::make('name')
@@ -48,6 +48,9 @@ class GenerativeModelResource extends Resource
                             ->required()
                             ->numeric()
                             ->prefix('$'),
+                        Forms\Components\TextInput::make('endpoint')
+                            ->required()
+                            ->maxLength(255),
                     ])->columns(2)
             ]);
     }
@@ -61,6 +64,8 @@ class GenerativeModelResource extends Resource
                 Tables\Columns\TextColumn::make('cost')
                     ->money()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('endpoint')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -92,7 +97,8 @@ class GenerativeModelResource extends Resource
                     ->schema([
                         TextEntry::make('name')->label('Model Name'),
                         TextEntry::make('cost')->label('Model Cost'),
-                    ])->columns(2),
+                        TextEntry::make('endpoint')->label('Model Endpoint'),
+                    ])->columns(3),
             ]);
     }
 

@@ -17,18 +17,8 @@ class GenerativeModelSeeder extends Seeder
     {
         
         GenerativeModel::factory()->create([
-            'name' => 'Stable Image Ultra', 'cost' => 9.99]);
+            'name' => 'Stable Image Ultra', 'cost' => 8.0, 'endpoint' => 'https://api.stability.ai/v2beta/stable-image/generate/ultra']);
         GenerativeModel::factory()->create([
-            'name' => 'Stable Image Core', 'cost' => 7.95]);
-        GenerativeModel::factory()->create([
-            'name' => 'Stable Diffusion 3.5 Large Turbo', 'cost' => 7.25]);
-        GenerativeModel::factory()->create([
-            'name' => 'Stable Diffusion 3.5 Large', 'cost' => 6.99]);
-        GenerativeModel::factory()->create([
-            'name' => 'Stable Diffusion 3.5 Medium', 'cost' => 5.99]);
-        GenerativeModel::factory()->create([
-            'name' => 'SDXL 1.0', 'cost' => 3.99]);
-        GenerativeModel::factory()->create([
-            'name' => 'SD 1.6', 'cost' => 2.99]);
+            'name' => 'Stable Image Core', 'cost' => 3.0, 'endpoint' => 'https://api.stability.ai/v2beta/stable-image/generate/core']);
     }
 }

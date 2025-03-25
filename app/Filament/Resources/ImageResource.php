@@ -24,7 +24,6 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Support\Facades\Storage;
 
-
 class ImageResource extends Resource
 {
     protected static ?string $model = Image::class;
