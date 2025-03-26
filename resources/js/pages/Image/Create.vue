@@ -1,4 +1,5 @@
 <template>
+  <Toaster />
   <Header/>
   <main class="flex justify-center items-center h-screen">
     <div class="p-8 max-w-lg border border-pink-300 rounded-2xl hover:shadow-xl hover:shadow-pink-50 flex flex-col justify-center items-center">
@@ -14,7 +15,7 @@
           Draw Now
         </button>
       </div>
-      <img :src="url" class="shadow rounded-lg" >
+      <img :src="$page.props.flash.image_url ? $page.props.flash.image_url : url" class="shadow rounded-lg" >
       <div class="relative inline-block text-left">
         <div>
           <button type="button" @click="dropdown_menu" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100" id="menu-button" aria-expanded="true" aria-haspopup="true">
@@ -37,13 +38,25 @@ import Footer from '@/Shared/Footer.vue';
 import Header from '@/Shared/Header.vue';
 import MenuItem from '@/Shared/MenuItem.vue';
 import { router } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3'
+import { Toaster } from '@/components/ui/toast'
+import { useToast } from '@/components/ui/toast/use-toast'
+
 export default {
-  props: ['models', 'url'],
+  props: ['models', 'url', 'flash'],
   components: {
     Footer,
     Header,
     MenuItem,
-    router
+    router,
+    Toaster,
+
+  },
+
+  setup () {
+    const { toast } = useToast();
+    const page = usePage();
+    return {page, toast};
   },
 
   data () {
@@ -52,6 +65,18 @@ export default {
       form: {
         model: null,
         prompt: null
+      }
+    }
+  },
+
+  watch: {
+    'flash.toast'(newValue) {
+      if (this.page.props.flash.toast) {
+        this.toast({
+          title: this.page.props.flash.toast.title,
+          description: this.page.props.flash.toast.description,
+          variant: this.page.props.flash.toast.variant
+        });
       }
     }
   },
@@ -73,6 +98,6 @@ export default {
       }
       router.post('/image/store', this.form)
     }
-  }
+  },
 };
 </script>

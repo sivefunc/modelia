@@ -18,7 +18,6 @@ Route::any('/register', function () {
     return Inertia::location(route("filament.dashboard.auth.register"));
 });
 
-
 Route::controller(\App\Http\Controllers\ImageController::class)->group(
     function () {
         Route::get('/image/create', 'create')->name('image.create')->middleware('auth');

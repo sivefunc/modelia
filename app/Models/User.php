@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -52,5 +53,10 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
         return true;
+    }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
     }
 }
