@@ -11,9 +11,11 @@ use App\Models\City;
 use App\Models\Region;
 use App\Models\Subregion;
 use App\Models\GenerativeModel;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 
 class StatsOverview extends BaseWidget
 {
+    use HasWidgetShield;
     protected static ?string $pollingInterval = null;
     protected static bool $isLazy = false;
 

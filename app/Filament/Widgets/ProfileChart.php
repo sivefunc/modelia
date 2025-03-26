@@ -7,13 +7,17 @@ use App\Models\Profile;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+
 class ProfileChart extends ChartWidget
 {
+    use HasWidgetShield;
     protected static ?string $pollingInterval = null;
     protected static bool $isLazy = false;
     protected static ?string $heading = 'Profile';
     protected static string $color = 'warning';
     protected static ?int $sort = 2;
+
 
     protected function getData(): array
     {
