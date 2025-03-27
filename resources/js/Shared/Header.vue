@@ -15,6 +15,19 @@
           <div v-if="$page.props.auth.user" class="sm:flex sm:gap-4">
             <Link
               class="block rounded-md bg-pink-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-pink-700"
+              href="/image/index"
+            >
+            Images
+            </Link>
+            <Link
+              class="block rounded-md bg-pink-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-pink-700"
+              href="/image/create"
+            >
+            Create
+            </Link>
+
+            <Link
+              class="block rounded-md bg-pink-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-pink-700"
               href="/logout"
               method="post"
             >
