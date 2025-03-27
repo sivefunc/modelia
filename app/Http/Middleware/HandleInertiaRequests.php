@@ -51,8 +51,9 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
             'flash' => [
-                'image_url' => fn () => $request->session()->get('image_url'),
-                'toast' => fn () => $request->session()->get('toast')
+                'image' => fn () => $request->session()->get('image'),
+                'toast' => fn () => $request->session()->get('toast'),
+
             ],
         ];
     }

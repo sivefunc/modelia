@@ -6,6 +6,7 @@ use Inertia\Inertia;
 
 use \App\Models\GenerativeModel;
 use \App\Models\Image;
+use \App\Models\ApiToken;
 
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Client as GuzzleClient;
@@ -16,6 +17,33 @@ use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
+
+    public function index () {
+        $profile = Auth::user()->profile;
+        $images = $profile->images;
+        foreach ($images as $image) {
+            $image->attachment = 
+                Storage::disk('public')->exists($image->attachment)
+                ? Storage::disk('public')->url($image->attachment)
+                : url('images/placeholder.png');
+        }
+        return Inertia::render('Image/Index', [
+            'images' => $images,
+        ]);
+    }
+
+    public function show (Image $image) {
+        return redirect()->route('image.create')
+                         ->with('image', [
+                             'prompt' => $image->prompt,
+                             'model' => $image->generative_model->name,
+                             'url' => Storage::disk('public')
+                                 ->exists($image->attachment)
+                             ? Storage::disk('public')->url($image->attachment)
+                             : null
+                         ]);
+    }
+
     public function create()
     {
         $url = url('images/placeholder.png');
@@ -49,12 +77,31 @@ class ImageController extends Controller
                 'variant' => "destructive",
             ];
             return redirect()->route('image.create')
-                         ->with('image_url', $url)
+                         ->with('image', ['url' => $url])
+                         ->with('toast', $toast);
+        }
+
+        $token = ApiToken::select()
+            ->where('status', '!=', 'not_active')
+            ->get()
+            ->first();
+
+        // [ERROR] Not Tokens with credits in System
+        if (!$token) {
+            $toast = [
+                'title' => "No Api Tokens with Balance",
+                'description' =>
+                    "No tokens with balance are found on DB, tell your " .
+                    "Admin to add tokens in the dashboard panel",
+                'variant' => "destructive",
+            ];
+            return redirect()->route('image.create')
+                         ->with('image', ['url' => $url])
                          ->with('toast', $toast);
         }
 
         $headers = [
-                    'Authorization' => 'Bearer sk-iTIAZq8e6TAMTTX0l12tiF9tfJlAhJJZx7IksBJnZSYBjmvn',
+                    'Authorization' => "Bearer " . $token->token,
                     'Accept' => 'image/*',
                 ];
 
@@ -104,19 +151,20 @@ class ImageController extends Controller
                 'variant' => "success",
             ];
 
-
         } catch (ClientException $e) {
             $body = json_decode($e->getResponse()->getBody(), true);
+            if ($body['name'] == "payment_required") {
+                $token->status = "not_active";
+                $token->save();
+            }
             $toast = [
                 'description' => $body['errors'][0],
                 'title' => $body['name'],
                 'variant' => "destructive",
             ];
-
         }
-
         return redirect()->route('image.create')
-                         ->with('image_url', $url)
+                         ->with('image', ['url' => $url])
                          ->with('toast', $toast);
     }
 }

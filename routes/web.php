@@ -20,8 +20,17 @@ Route::any('/register', function () {
 
 Route::controller(\App\Http\Controllers\ImageController::class)->group(
     function () {
-        Route::get('/image/create', 'create')->name('image.create')->middleware('auth');
-        Route::post('/image/store', 'store')->middleware('auth');
+
+        Route::get('/image/index', 'index')
+            ->name('image.index')
+            ->middleware('auth');
+        Route::get('/image/create', 'create')
+            ->name('image.create')
+            ->middleware('auth');
+        Route::post('/image/store', 'store')
+            ->middleware('auth');
+        Route::get('/image/{image:link}', 'show')
+            ->name('image.show')->middleware('auth');
     }
 );
 

@@ -13,5 +13,4 @@ class CreateImage extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
-
 }

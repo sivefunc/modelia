@@ -15,7 +15,7 @@
           Draw Now
         </button>
       </div>
-      <img :src="$page.props.flash.image_url ? $page.props.flash.image_url : url" class="shadow rounded-lg" >
+      <img :src="image_url()" class="shadow rounded-lg" >
       <div class="relative inline-block text-left">
         <div>
           <button type="button" @click="dropdown_menu" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-100" id="menu-button" aria-expanded="true" aria-haspopup="true">
@@ -78,10 +78,21 @@ export default {
           variant: this.page.props.flash.toast.variant
         });
       }
-    }
+    },
   },
 
   methods: {
+    check_dict(obj, key) {
+      return obj !== null && 
+        typeof obj === 'object' && 
+        key in obj && 
+        obj[key] !== null;
+    },
+
+    image_url() {
+      return this.check_dict(this.page.props.flash.image, 'url') ?
+        this.page.props.flash.image.url : this.url
+    },
     dropdown_menu(event) {
       this.isDropdownHidden = !this.isDropdownHidden;
       if (event && event.target.role == "menuitem") {
@@ -99,5 +110,14 @@ export default {
       router.post('/image/store', this.form)
     }
   },
+  mounted() {
+    if (this.check_dict(this.page.props.flash.image, 'prompt')) {
+      this.form.prompt = this.page.props.flash.image.prompt;
+    }
+    if (this.check_dict(this.page.props.flash.image, 'model')) {
+      this.form.model = this.page.props.flash.image.model;
+    }
+
+  }
 };
 </script>
