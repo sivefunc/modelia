@@ -212,7 +212,7 @@ class CountryResource extends Resource
             ]);
     }
 
-    /* public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
             ->schema([
@@ -229,6 +229,9 @@ class CountryResource extends Resource
                         Infolists\Components\TextEntry::make('latitude'),
                         Infolists\Components\TextEntry::make('longitude'),
                         Infolists\Components\TextEntry::make('timezones')
+                            ->limit(30)
+                            ->copyable()
+                            ->copyMessage('Copied!')
                     ])->columns(5),
 
                 Infolists\Components\Section::make('Currency')
@@ -247,7 +250,10 @@ class CountryResource extends Resource
                     ])->columns(5),
                 Infolists\Components\Section::make('Language')
                     ->schema([
-                        Infolists\Components\TextEntry::make('translations'),
+                        Infolists\Components\TextEntry::make('translations')
+                            ->limit(30)
+                            ->copyable()
+                            ->copyMessage('Copied!'),
                         Infolists\Components\TextEntry::make('native')
                     ])->columns(2),
                 Infolists\Components\Section::make('More data')
@@ -260,7 +266,6 @@ class CountryResource extends Resource
             ]);
 
     }
-     */
 
     public static function getRelations(): array
     {

@@ -21,6 +21,11 @@ use App\Models\Country;
 use App\Models\Subregion;
 use Illuminate\Support\Collection;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+
 class ProfileResource extends Resource
 {
     protected static ?string $model = Profile::class;
@@ -229,6 +234,37 @@ class ProfileResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('User name and balance')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name'),
+                        Infolists\Components\TextEntry::make('balance')
+                    ])->columns(2),
+                Infolists\Components\Section::make('Location')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('region.name'),
+                        Infolists\Components\TextEntry::make('subregion.name'),
+                        Infolists\Components\TextEntry::make('country.name'),
+                        Infolists\Components\TextEntry::make('state.name'),
+                        Infolists\Components\TextEntry::make('city.name'),
+                    ])->columns(5),
+                Infolists\Components\Section::make('Profile names')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('first_name'),
+                        Infolists\Components\TextEntry::make('last_name'),
+                    ])->columns(2),
+                Infolists\Components\Section::make('Profile names')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('date_of_birth'),
+                    ])->columns(1),
+
+            ]);
+
     }
 
     public static function getRelations(): array

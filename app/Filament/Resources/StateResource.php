@@ -13,6 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+
 class StateResource extends Resource
 {
     protected static ?string $model = State::class;
@@ -145,6 +150,35 @@ class StateResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+    
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('State name and codes')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name'),
+                        Infolists\Components\TextEntry::make('fips_code'),
+                        Infolists\Components\TextEntry::make('iso2'),
+                    ])->columns(3),
+                Infolists\Components\Section::make('Location')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('country.name'),
+                        Infolists\Components\TextEntry::make('country_code'),
+                        Infolists\Components\TextEntry::make('latitude'),
+                        Infolists\Components\TextEntry::make('longitude'),
+                    ])->columns(4),
+
+                Infolists\Components\Section::make('More data')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('type'),
+                        Infolists\Components\TextEntry::make('level'),
+                        Infolists\Components\TextEntry::make('parent_id'),
+                        Infolists\Components\TextEntry::make('flag'),
+                        Infolists\Components\TextEntry::make('wikiDataId'),
+                    ])->columns(5),
             ]);
     }
 

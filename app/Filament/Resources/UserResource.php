@@ -101,7 +101,10 @@ class UserResource extends Resource
                     ->schema([
                         TextEntry::make('name'),
                         TextEntry::make('email'),
-                        TextEntry::make('password'),
+                        TextEntry::make('password')
+                            ->limit(30)
+                            ->copyable()
+                            ->copyMessage('Copied!'),
                         TextEntry::make('email_verified_at'),
                     ])->columns(3),
             ]);

@@ -13,6 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+
 class CityResource extends Resource
 {
     protected static ?string $model = City::class;
@@ -139,6 +144,32 @@ class CityResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('City name')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name'),
+                    ])->columns(1),
+                Infolists\Components\Section::make('Location')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('state.name'),
+                        Infolists\Components\TextEntry::make('state_code'),
+                        Infolists\Components\TextEntry::make('country.name'),
+                        Infolists\Components\TextEntry::make('country_code'),
+                        Infolists\Components\TextEntry::make('latitude'),
+                        Infolists\Components\TextEntry::make('longitude'),
+                    ])->columns(6),
+
+                Infolists\Components\Section::make('More data')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('flag'),
+                        Infolists\Components\TextEntry::make('wikiDataId'),
+                    ])->columns(2),
             ]);
     }
 

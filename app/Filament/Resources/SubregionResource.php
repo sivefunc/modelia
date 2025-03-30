@@ -13,6 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+
 class SubregionResource extends Resource
 {
     protected static ?string $model = Subregion::class;
@@ -85,6 +90,24 @@ class SubregionResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Subregion Info')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('name'),
+                        Infolists\Components\TextEntry::make('region_id'),
+                        Infolists\Components\TextEntry::make('flag'),
+                        Infolists\Components\TextEntry::make('wikiDataId'),
+                        Infolists\Components\TextEntry::make('translations')
+                            ->limit(30)
+                            ->copyable()
+                            ->copyMessage('Copied!')
+                    ])->columns(5),
             ]);
     }
 
