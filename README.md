@@ -31,7 +31,6 @@
 2. [Features](#features)
 3. [Installation](#installation)
 4. [Run](#run)
-5. [Notes](#notes)
 
 ## :question: About <a name="about"></a>
 Modelia is a web based program that generates images using the company [Stability](https://stability.ai/) stable diffusion based models through their RESTful API, although it currently just supports that company, it can expands to more generative models like [Dall-E 3](https://openai.com/index/dall-e-3/) or [MidJourney](https://www.midjourney.com/).
