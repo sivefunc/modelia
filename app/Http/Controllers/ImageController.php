@@ -20,13 +20,15 @@ class ImageController extends Controller
 
     public function index () {
         $profile = Auth::user()->profile;
-        $images = $profile->images;
-        foreach ($images as $image) {
-            $image->attachment = 
-                Storage::disk('public')->exists($image->attachment)
-                ? Storage::disk('public')->url($image->attachment)
-                : url('images/placeholder.png');
+        $images = [];
+        foreach ($profile->images as $image) {
+            if (Storage::disk('public')->exists($image->attachment)) {
+                $image->attachment = Storage::disk('public')
+                      ->url($image->attachment);
+                $images[] = $image;
+            }
         }
+
         return Inertia::render('Image/Index', [
             'images' => $images,
         ]);

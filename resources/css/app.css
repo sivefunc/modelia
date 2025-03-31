@@ -139,3 +139,11 @@ html {
         @apply bg-background text-foreground;
     }
 }
+
+.text-outline {
+  text-shadow: 
+    1px 1px 0 pink, 
+    -1px -1px 0 pink, 
+    1px -1px 0 pink, 
+    -1px 1px 0 pink; /* White outline */
+}

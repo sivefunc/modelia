@@ -1,7 +1,7 @@
 <template>
   <Toaster />
   <Header/>
-  <main class="flex justify-center items-center h-screen">
+  <main class="flex justify-center items-center h-screen bg-gradient-to-r from-pink-50/50 via-pink-50 to-pink-50/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 ">
     <div class="p-8 max-w-lg border border-pink-300 rounded-2xl hover:shadow-xl hover:shadow-pink-50 flex flex-col justify-center items-center">
       <div class="flex mb-5 w-full space-x-5">
         <input
