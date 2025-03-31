@@ -77,6 +77,9 @@ php artisan key:generate
 npm install
 php artisan migrate
 php artisan db:seed
+php artisan storage:link
+php artisan shield:generate --all
+php artisan shield:super-admin
 ```
 
 ## :computer: Run <a name="run"></a>
